@@ -1,54 +1,53 @@
-# CodeAlpha_Basic-Network-Sniffer_Project
-Educational Python &amp; Scapy network sniffer for capturing and analyzing packet metadata, protocols, IPs, packet structure, and controlled payload previews through a Streamlit interface.
-🌐 NetScope — Basic Network Sniffer
+# NetScope — Basic Network Sniffer
 
-NetScope is an educational network traffic analysis tool built with Python, Scapy, and Streamlit. It allows users to capture authorized network traffic, load PCAP/PCAPNG files, inspect packet structure, identify protocols, and analyze source/destination network information through an interactive web interface.
+An educational Python + Streamlit network sniffer for studying packet capture, protocol layers, and network metadata.
 
-The project was developed to strengthen practical understanding of computer networking, packet structures, protocol layers, and basic network-security concepts.
+## Task 1 requirements
+- Capture network traffic packets
+- Analyze packet structure and content
+- Learn data flow and protocol basics
+- Use Scapy for packet capture
+- Display source/destination IPs, protocols, and controlled payload previews
 
- ✨ Key Features
+## Safety
+Use only on systems and networks you own or are explicitly authorized to inspect. Payload preview is OFF by default because captured data may contain sensitive information. The application does not decrypt encrypted traffic or attempt to retrieve passwords, tokens, or credentials.
 
-- Live packet capture using Scapy
-- PCAP/PCAPNG offline analysis
-- Safe Demo Traffic mode
-- Source and destination IP identification
-- TCP, UDP, ICMP, IPv4 and IPv6 detection
-- Packet length and header information
-- Layer-by-layer packet structure inspection
-- Optional truncated payload preview
-- Protocol statistics and endpoint analysis
-- Interactive Streamlit dashboard
-- CSV, JSON and Markdown export
-- Built-in checks for reliable packet parsing
+## Modes
+1. Demo traffic — no live capture and no elevated privileges required.
+2. Live interface — Scapy packet capture from a selected local interface.
+3. PCAP file — offline analysis of a permitted capture.
 
-🛠️ Technology Stack
+## Windows
+Live capture typically requires Npcap and may require an elevated terminal depending on interface/driver configuration.
 
-Python  
-Scapy  
-Streamlit  
-Pandas  
-Python-dotenv
-
-🎯 Learning Objectives
-
-This project focuses on understanding:
-
-- How network packets are captured
-- How protocol layers are represented
-- How source and destination information is carried
-- Differences between common transport protocols
-- Basic packet inspection and traffic analysis
-- Practical use of Python for networking
-
-🔐 Security & Responsible Use
-
-NetScope is intended for educational and authorized network-analysis environments.
-
-Only capture or inspect traffic on systems and networks that you own or have explicit permission to analyze.
-
-Payload preview is disabled by default and is limited to a short, truncated representation when enabled. The application does not attempt to decrypt encrypted traffic or recover passwords, authentication tokens, or credentials.
-
-🚀 Getting Started
-
-```bash
+```powershell
 python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+Copy-Item .env.example .env
+python run_checks.py
+streamlit run app.py
+```
+
+## Linux
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python run_checks.py
+streamlit run app.py
+```
+
+## Packet structure
+A common packet can be viewed as layered protocol data, for example: Ethernet -> IPv4/IPv6 -> TCP/UDP -> application payload.
+
+## Payload handling
+If payload preview is enabled, the UI shows at most 64 bytes using printable-character rendering and replaces non-printable bytes with dots. This is an educational preview, not a decoder.
+
+## Accuracy
+Packet length is measured from the captured Scapy packet object. IP addresses and protocol fields are read from packet headers. The tool does not infer a protocol that is not represented in the packet layers.
+
+## Exports
+- CSV packet table
+- JSON analysis
+- Markdown report
